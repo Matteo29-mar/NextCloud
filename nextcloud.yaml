@@ -1,0 +1,52 @@
+name: nomeContainer
+services:
+  main_app:
+    cpu_shares: 50
+    command: []
+    deploy:
+      resources:
+        limits:
+          memory: 1847M
+    environment:
+      - MYSQL_DATABASE= nomeDatabase
+      - MYSQL_HOST=192.168.1.3:3306
+      - MYSQL_PASSWORD= password
+      - MYSQL_USER= nomeUtente
+    image: nextcloud:latest
+    labels:
+      icon: https://icon.casaos.io/main/all/nextcloud.png
+    ports:
+      - target: 80
+        published: "9001"
+        protocol: tcp
+    restart: always
+    volumes:
+      - type: bind
+        source: /media/Nextcloud/WWW
+        target: /var/www/html
+      - type: bind
+        source: /media/Nextcloud/Apps
+        target: /var/www/html/custom_apps
+      - type: bind
+        source: /media/Nextcloud/Config
+        target: /var/www/html/config
+      - type: bind
+        source: /media/Nextcloud/Data
+        target: /var/www/html/data
+    devices: []
+    cap_add: []
+    network_mode: bridge
+    privileged: false
+    container_name: ""
+    hostname: ""
+x-casaos:
+  author: self
+  category: self
+  hostname: ""
+  icon: https://icon.casaos.io/main/all/nextcloud.png
+  index: /
+  port_map: "9001"
+  scheme: http
+  store_app_id: nomeContainer
+  title:
+    custom: nextcloud

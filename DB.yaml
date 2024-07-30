@@ -1,0 +1,43 @@
+name: nomeContainer
+services:
+  main_app:
+    cpu_shares: 10
+    command: []
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    environment:
+      - MYSQL_DATABASE= nomeDatabase
+      - MYSQL_PASSWORD= password
+      - MYSQL_ROOT_PASSWORD= rootPassword
+      - MYSQL_USER= nomeUtente
+    image: mariadb:latest
+    labels:
+      icon: https://icon.casaos.io/main/all/mariadb.png
+    ports:
+      - target: 3306
+        published: "3306"
+        protocol: tcp
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /main/usb/db
+        target: /var/lib/mysql
+    devices: []
+    cap_add: []
+    network_mode: bridge
+    privileged: false
+    container_name: ""
+    hostname: ""
+x-casaos:
+  author: self
+  category: self
+  hostname: ""
+  icon: https://icon.casaos.io/main/all/mariadb.png
+  index: /
+  port_map: "3306"
+  scheme: http
+  store_app_id: nomeContainer
+  title:
+    custom: DB
